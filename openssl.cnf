@@ -12,9 +12,9 @@ KEY_SIZE               = 2048
 KEY_COUNTRY            = DE
 KEY_PROVINCE           = BAVARIA
 KEY_CITY               = MUNICH
-KEY_ORG                = ERWINMUELLER.NTTDATA.COM
-KEY_ORGUNIT            = IT-DIVISION
-KEY_EMAIL              = root@erwinmueller.nttdata.com
+KEY_ORG                = NTT DATA GMBH
+KEY_ORGUNIT            = ERWIN MUELLER
+KEY_EMAIL              = admin@erwinmueller.nttdata.com
 
 # Extra OBJECT IDENTIFIER info:
 #oid_file        = $ENV::HOME/.oid
@@ -134,29 +134,31 @@ string_mask = utf8only
 
 [ req_distinguished_name ]
 countryName            = Country Name (2 letter code)
-countryName_default        = AU
+countryName_default    = $ENV::KEY_COUNTRY
 countryName_min            = 2
 countryName_max            = 2
 
 stateOrProvinceName        = State or Province Name (full name)
-stateOrProvinceName_default    = Some-State
+stateOrProvinceName_default = $ENV::KEY_PROVINCE
 
 localityName            = Locality Name (eg, city)
+localityName_default   = $ENV::KEY_CITY
 
 0.organizationName        = Organization Name (eg, company)
-0.organizationName_default    = Internet Widgits Pty Ltd
+0.organizationName_default    = $ENV::KEY_ORG
 
 # we can do this but it is not needed normally :-)
 #1.organizationName        = Second Organization Name (eg, company)
 #1.organizationName_default    = World Wide Web Pty Ltd
 
 organizationalUnitName        = Organizational Unit Name (eg, section)
-#organizationalUnitName_default    =
+organizationalUnitName_default    = $ENV::KEY_ORGUNIT
 
 commonName            = Common Name (e.g. server FQDN or YOUR name)
 commonName_max            = 64
 
 emailAddress            = Email Address
+emailAddress_default    = $ENV::KEY_EMAIL
 emailAddress_max        = 64
 
 # SET-ex3            = SET extension number 3
@@ -357,32 +359,38 @@ tsa_name        = yes    # Must the TSA name be included in the reply?
 ess_cert_id_chain    = no    # Must the ESS cert id chain be included?
                 # (optional, default: no)
 
-####################################################################
-# Extensions for when we sign normal certs (specified as default)
 [ usr_cert ]
+
 basicConstraints = CA:false
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 subjectAltName = email:move
 
-####################################################################
-# Same as above, but cert req already has SubjectAltName
 [ usr_cert_has_san ]
+
 basicConstraints = CA:false
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 
-####################################################################
-# Extensions to use when signing a CA
+[ server ]
+
+basicConstraints       = CA:FALSE
+nsCertType             = server
+nsComment              = "OpenSSL Generated Server Certificate"
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid,issuer:always
+extendedKeyUsage       = serverAuth
+keyUsage               = digitalSignature, keyEncipherment
+
 [ v3_ca ]
+
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always,issuer:always
 basicConstraints = CA:true
 subjectAltName=email:move
 
-####################################################################
-# Same as above, but CA req already has SubjectAltName
 [ v3_ca_has_san ]
+
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always,issuer:always
 basicConstraints = CA:true
