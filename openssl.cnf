@@ -14,7 +14,7 @@ KEY_PROVINCE           = BAVARIA
 KEY_CITY               = MUNICH
 KEY_ORG                = NTT DATA GMBH
 KEY_ORGUNIT            = ERWIN MUELLER
-KEY_EMAIL              = admin@erwinmueller.nttdata.com
+KEY_EMAIL              = admin@erwinmueller.nttdata.com.test
 
 # Extra OBJECT IDENTIFIER info:
 #oid_file        = $ENV::HOME/.oid
